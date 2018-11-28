@@ -28,26 +28,16 @@ struct Postfix_to_Infix{
         infix_to_postfix.EvaluateInfix(this->data);
     }
 
-
-    /*bool isNumberDigit(char C){
-        if (C >= '0' && C <= '9'){
-            return 1;
-        }
-        else{
+         bool isOperator(std::string C){
+            if (C == Add ||
+                C == Subtract ||
+                C == Multiply ||
+                C == Divide)
+            {
+                return 1;
+            }
             return 0;
         }
-    }*/
-
-    bool isOperator(std::string C){
-        if (C == Add ||
-            C == Subtract ||
-            C == Multiply ||
-            C == Divide)
-        {
-                return 1;
-        }
-        return 0;
-    }
 
     //Function to perform operation:
     int PerformOperation(std::string operation, int operand1, int operand2){
@@ -74,7 +64,7 @@ struct Postfix_to_Infix{
         Stack<int> stack;
         Node<T>* ptr = infix_to_postfix.Postfix_list.getpHead();
 
-        for (int i = 0; i < infix_to_postfix.Postfix_list.isSize(); i++){
+        while (ptr != NULL){
             //Check operator:
             if (isOperator(ptr->data)){
                 //Pop two operands:
@@ -86,11 +76,6 @@ struct Postfix_to_Infix{
 
                 //Push back to stack:
                 stack.Push(result);
-
-                //Check ptr:
-                if (ptr != NULL){
-                    ptr = ptr->pNext;
-                }
             }
 
             //Check Numberdigit:
@@ -98,12 +83,8 @@ struct Postfix_to_Infix{
                 int operand;
                 std::istringstream(ptr->data) >> operand;
                 stack.Push(operand);
-
-                //Check ptr:
-                if (ptr != NULL){
-                    ptr = ptr->pNext;
-                }
             }
+            ptr = ptr->pNext;
         }
         //Return the result in stack:
         return stack.Pop();

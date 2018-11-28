@@ -36,13 +36,19 @@ struct Infix_to_Postfix{
     }
 
     bool HigherPrecedence(std::string C1, std::string C2){
+        int temp = 0;
         int GetPrecedenceC1 = Precedence(C1);
         int GetPrecedenceC2 = Precedence(C2);
 
         if (GetPrecedenceC1 == GetPrecedenceC2){
-            return 1;
+            temp = 1;
+            return temp;
         }
-        return (GetPrecedenceC1 > GetPrecedenceC2);
+        else if (GetPrecedenceC1 > GetPrecedenceC2){
+            temp =  1;
+            return temp;
+        }
+        return temp;
     }
 
     void EvaluateInfix(T data){
@@ -50,30 +56,30 @@ struct Infix_to_Postfix{
         check.ReadToken(data);
         Node<T>* ptr = check.list.getpHead();
 
-        for (int i = 0; i < check.list.isSize(); i++){
+        while (ptr != NULL){
             if (isOperator(ptr->data)){
                 while (!stack.isEmpty() && HigherPrecedence(stack.Bot(), ptr->data)){
                     if (stack.Bot() == "(" || stack.Bot() == "[" || stack.Bot() == "{") {
                         break;
                     }
-
+                    if (ptr->data == "-"){
+                        std::string temp = ptr->data;
+                        if (ptr != NULL) {
+                            ptr = ptr->pNext;
+                        }
+                        temp += ptr->data;
+                        Postfix_list.addLast(temp);
+                    }
                     Postfix_list.addLast(stack.Pop());
-                }
-                stack.Push(ptr->data);
-
-                if (ptr != NULL){
                     ptr = ptr->pNext;
                 }
-            }
+                    stack.Push(ptr->data);
+                }
 
             else if (ptr->data == "(" ||
                      ptr->data == "[" ||
                      ptr->data == "{"){
                 stack.Push(ptr->data);
-
-                if (ptr != NULL){
-                    ptr = ptr->pNext;
-                }
             }
 
             else if (ptr->data == ")" ||
@@ -87,9 +93,6 @@ struct Infix_to_Postfix{
                 }
                 stack.Pop();
 
-                if (ptr != NULL){
-                    ptr = ptr->pNext;
-                }
             }
             else if (ptr->data == ""){
                 if (ptr != NULL){
@@ -100,11 +103,8 @@ struct Infix_to_Postfix{
             }
             else{
                 Postfix_list.addLast(ptr->data);
-
-                if (ptr != NULL){
-                    ptr = ptr->pNext;
-                }
             }
+            ptr = ptr->pNext;
         }
         while (!stack.isEmpty()){
             Postfix_list.addLast(stack.Pop());
