@@ -14,14 +14,16 @@ template <typename T>
 struct Node{
     T data;
     Node<T>* pNext;
+    Node<T>* pPrev;
 
     Node(T data){
         this->data = data;
         pNext = NULL;
+        pPrev = NULL;
     }
 };
 template <typename T>
-struct List{
+struct List{ //This is Double-Linked List;
     Node<T>* pHead;
     Node<T>* pTail;
     int size;
@@ -45,6 +47,7 @@ struct List{
             pTail = pNew;
         }
         else{
+            pHead->pPrev = pNew;
             pNew->pNext = pHead;
             pHead = pNew;
         }
@@ -60,6 +63,7 @@ struct List{
             pTail = pNew;
         }
         else{
+            pNew->pPrev = pTail;
             pTail->pNext = pNew;
             pTail = pNew;
         }

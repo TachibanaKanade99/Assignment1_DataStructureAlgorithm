@@ -59,7 +59,7 @@ struct Infix_to_Postfix{
                     if (stack.Bot() == "(" || stack.Bot() == "[" || stack.Bot() == "{") {
                         break;
                     }
-                    if (ptr->data == "-") {
+                    if (ptr->data == "-" && (isOperator(ptr->pPrev->data) || ptr->pPrev->data == "-")) {
                         std::string temp = ptr->data;
                         if (ptr != NULL) {
                             ptr = ptr->pNext;
@@ -68,7 +68,6 @@ struct Infix_to_Postfix{
                         Postfix_list.addLast(temp);
                     }
                     Postfix_list.addLast(stack.Pop());
-                    //ptr = ptr->pNext;
                 }
                 if (isOperator(ptr->data)){
                     stack.Push(ptr->data);

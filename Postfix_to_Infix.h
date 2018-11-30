@@ -15,6 +15,7 @@
 #define Subtract "-"
 #define Multiply "*"
 #define Divide "/"
+#define Modulo "%"
 
 //Unary Operation:
 
@@ -29,10 +30,11 @@ struct Postfix_to_Infix{
     }
 
          bool isOperator(std::string C){
-            if (C == Add ||
+            if (C == Add      ||
                 C == Subtract ||
                 C == Multiply ||
-                C == Divide)
+                C == Divide   ||
+                C == Modulo)
             {
                 return 1;
             }
@@ -53,8 +55,11 @@ struct Postfix_to_Infix{
         else if (operation == Divide){
             return operand1 / operand2;
         }
+        else if (operation == Modulo){
+            return operand1 % operand2;
+        }
         else{
-            std::cout << "Inexpected Error" << std::endl;
+            std::cout << "Operator Error" << std::endl;
             return -1;
         }
     }

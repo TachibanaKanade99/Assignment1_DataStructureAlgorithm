@@ -115,6 +115,9 @@ struct Check{
 					count = 0;
 				}
 				t = data.substr(i, 1);
+				if (t == ""){
+                    continue;
+				}
 				list.addLast(t);
 			}
 		}
