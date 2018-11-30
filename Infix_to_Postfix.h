@@ -36,19 +36,16 @@ struct Infix_to_Postfix{
     }
 
     bool HigherPrecedence(std::string C1, std::string C2){
-        int temp = 0;
         int GetPrecedenceC1 = Precedence(C1);
         int GetPrecedenceC2 = Precedence(C2);
 
         if (GetPrecedenceC1 == GetPrecedenceC2){
-            temp = 1;
-            return temp;
+            return 1;
         }
         else if (GetPrecedenceC1 > GetPrecedenceC2){
-            temp =  1;
-            return temp;
+            return 1;
         }
-        return temp;
+        return 0;
     }
 
     void EvaluateInfix(T data){
@@ -57,12 +54,12 @@ struct Infix_to_Postfix{
         Node<T>* ptr = check.list.getpHead();
 
         while (ptr != NULL){
-            if (isOperator(ptr->data)){
-                while (!stack.isEmpty() && HigherPrecedence(stack.Bot(), ptr->data)){
+            if (isOperator(ptr->data)) {
+                while (!stack.isEmpty() && HigherPrecedence(stack.Bot(), ptr->data)) {
                     if (stack.Bot() == "(" || stack.Bot() == "[" || stack.Bot() == "{") {
                         break;
                     }
-                    if (ptr->data == "-"){
+                    if (ptr->data == "-") {
                         std::string temp = ptr->data;
                         if (ptr != NULL) {
                             ptr = ptr->pNext;
@@ -71,10 +68,12 @@ struct Infix_to_Postfix{
                         Postfix_list.addLast(temp);
                     }
                     Postfix_list.addLast(stack.Pop());
-                    ptr = ptr->pNext;
+                    //ptr = ptr->pNext;
                 }
+                if (isOperator(ptr->data)){
                     stack.Push(ptr->data);
                 }
+            }
 
             else if (ptr->data == "(" ||
                      ptr->data == "[" ||

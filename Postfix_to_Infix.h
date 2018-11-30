@@ -65,8 +65,13 @@ struct Postfix_to_Infix{
         Node<T>* ptr = infix_to_postfix.Postfix_list.getpHead();
 
         while (ptr != NULL){
+            if (ptr->data == ""){
+                ptr = ptr->pNext;
+                continue;
+            }
+
             //Check operator:
-            if (isOperator(ptr->data)){
+            else if (isOperator(ptr->data)){
                 //Pop two operands:
                 int operand2 = stack.Pop();
                 int operand1 = stack.Pop();
