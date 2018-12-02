@@ -6,6 +6,7 @@
 #define CHECK_PARENTHESES_CHECK_PARENTHESIS_H
 
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "Stack.h"
@@ -18,14 +19,13 @@
 #define left_curlybrace '{'
 #define right_curlybrace '}'
 
-template <typename T>
 struct Check{
-	List<T> list;
+	List<std::string> list;
 	~Check(){
 		//std::cout << "\nDestructor calls here " << std::endl;
 	}
 
-	std::string RemoveSpace(T data){
+	std::string RemoveSpace(std::string data){
 		std::stringstream ss;
 		std::string temp;
 
@@ -53,7 +53,7 @@ struct Check{
 	}
 
 	//Check balanced parentheses:
-	bool isBalanced(T data){
+	bool isBalanced(std::string data){
 		data = RemoveSpace(data);
 	    Stack<char> stack;
 
@@ -77,6 +77,7 @@ struct Check{
 	    }
 	}
 
+	//Check is numeber:
 	bool IsNumberDigit(std::string str){
 		if (str == "0" ||
 			str == "1" ||
@@ -87,7 +88,8 @@ struct Check{
 			str == "6" ||
 			str == "7" ||
 			str == "8" ||
-			str == "9" )
+			str == "9" ||
+			str == ".")
 		{
 			return 1;
 		}
@@ -96,23 +98,53 @@ struct Check{
 		}
 	}
 
+	//CHeck is letter digit:
+	bool isLetter(char c){
+		if (c >= 'a' && c <= 'z'){
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	bool isWord(std::string str){
+		for (int i = 0; i < str.length(); i++){
+			if (isLetter(str[i])){
+				return 1;
+			}
+			else{
+				return 0;
+			}
+		}
+	}
+
 	//Read each token to list: // If isBalanced == 1 call ReadToken:
-    bool ReadToken(T data){
+    bool ReadToken(std::string data){
 		data = RemoveSpace(data);
-        int count = 0;
-        int temp = 0;
+
         if (isBalanced(data)) {
 			for (int i = 0; i < data.length(); i++) {
-				T t;
+				std::string t;
 				if (IsNumberDigit(data.substr(i, 1))) {
-					temp = i;
+					int count = 0;
+					int temp = i;
 					while (i < data.length() && IsNumberDigit(data.substr(i, 1))){
 						count++;
 						i++;
 					}
 					t = data.substr(temp, count);
 					list.addLast(t);
-					count = 0;
+				}
+				if (isWord(data.substr(i, 1))){
+				    int count = 0;
+				    int temp = i;
+				    while (i < data.length() && isWord(data.substr(i, 1))){
+				        count++;
+				        i++;
+				    }
+				    t = data.substr(temp, count);
+				    list.addLast(t);
 				}
 				t = data.substr(i, 1);
 				if (t == ""){

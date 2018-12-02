@@ -10,10 +10,9 @@
 #include <string>
 
 
-template <typename T>
 struct Infix_to_Postfix{
-    Check<T> check;
-    List<T> Postfix_list;
+    Check check;
+    List<std::string> Postfix_list;
 
     ~Infix_to_Postfix(){}
 
@@ -48,10 +47,10 @@ struct Infix_to_Postfix{
         return 0;
     }
 
-    void EvaluateInfix(T data){
+    void EvaluateInfix(std::string data){
         Stack<std::string> stack;
         check.ReadToken(data);
-        Node<T>* ptr = check.list.getpHead();
+        Node<std::string>* ptr = check.list.getpHead();
 
         while (ptr != NULL){
             if (isOperator(ptr->data)) {

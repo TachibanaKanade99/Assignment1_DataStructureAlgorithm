@@ -22,27 +22,28 @@
 template <typename T>
 struct Postfix_to_Infix{
     //Read data from here:
-    T data;
-    Infix_to_Postfix<T> infix_to_postfix;
-    Postfix_to_Infix(T data){
+    std::string data;
+    Infix_to_Postfix infix_to_postfix;
+    Postfix_to_Infix(std::string data){
         this->data = data;
         infix_to_postfix.EvaluateInfix(this->data);
     }
 
-         bool isOperator(std::string C){
-            if (C == Add      ||
-                C == Subtract ||
-                C == Multiply ||
-                C == Divide   ||
-                C == Modulo)
-            {
-                return 1;
-            }
-            return 0;
+    //Check is operator:
+    bool isOperator(std::string C){
+        if (C == Add      ||
+            C == Subtract ||
+            C == Multiply ||
+            C == Divide   /*||
+            C == Modulo*/) // Consider Type Double cannot perform Modulo operation:
+        {
+            return 1;
         }
+        return 0;
+    }
 
     //Function to perform operation:
-    int PerformOperation(std::string operation, int operand1, int operand2){
+    T PerformOperation(std::string operation, T operand1, T operand2){
         if (operation == Add){
             return operand1 + operand2;
         }
@@ -55,19 +56,19 @@ struct Postfix_to_Infix{
         else if (operation == Divide){
             return operand1 / operand2;
         }
-        else if (operation == Modulo){
+        /*else if (operation == Modulo){
             return operand1 % operand2;
-        }
+        }*/
         else{
             std::cout << "Operator Error" << std::endl;
             return -1;
         }
     }
 
-    int EvaluatePostfix(){
+    T EvaluatePostfix(){
 
-        Stack<int> stack;
-        Node<T>* ptr = infix_to_postfix.Postfix_list.getpHead();
+        Stack<T> stack;
+        Node<std::string>* ptr = infix_to_postfix.Postfix_list.getpHead();
 
         while (ptr != NULL){
             if (ptr->data == ""){
@@ -78,11 +79,11 @@ struct Postfix_to_Infix{
             //Check operator:
             else if (isOperator(ptr->data)){
                 //Pop two operands:
-                int operand2 = stack.Pop();
-                int operand1 = stack.Pop();
+                T operand2 = stack.Pop();
+                T operand1 = stack.Pop();
 
                 //Perform operation:
-                int result = PerformOperation(ptr->data, operand1, operand2);
+                T result = PerformOperation(ptr->data, operand1, operand2);
 
                 //Push back to stack:
                 stack.Push(result);
@@ -90,7 +91,7 @@ struct Postfix_to_Infix{
 
             //Check Numberdigit:
             else {
-                int operand;
+                T operand;
                 std::istringstream(ptr->data) >> operand;
                 stack.Push(operand);
             }

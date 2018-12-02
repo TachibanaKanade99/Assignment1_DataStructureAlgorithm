@@ -21,6 +21,7 @@ struct Node{
         pNext = NULL;
         pPrev = NULL;
     }
+
 };
 template <typename T>
 struct List{ //This is Double-Linked List;
