@@ -54,8 +54,7 @@ struct Exercise2{
             ptr = ptr->pNext;
         }
         T result = postfix_to_infix.EvaluatePostfix();
-        /*char name;
-        std::istringstream(str.substr(0, 1)) >> name;*/
+
         operand_list.addLast(new Operand<T>(postfix_to_infix.infix_to_postfix.Postfix_list.getpHead()->data, result));
         return result;
     }

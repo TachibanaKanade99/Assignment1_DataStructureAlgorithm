@@ -16,6 +16,8 @@ int main() {
     std::cout << "Postfix of String: " << std::endl;
     std::cout << postfix_to_infix1.infix_to_postfix.Postfix_list << std::endl;
 */
+    //ReadInput Exercise1:
+    ReadInput1();
 
     //Exercise 2:
     /*std::string str2 = "";
@@ -37,6 +39,11 @@ int main() {
         n++;
     }
     while (n < N);*/
+
+
+    //ReadInput Exercise2:
+    std::cout << "\n";
+    ReadInput2();
 
     return 0;
 }
