@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cmath>
 #include "Infix_to_Postfix.h"
 
 //Binary Operation:
@@ -15,6 +16,7 @@
 #define Subtract "-"
 #define Multiply "*"
 #define Divide "/"
+#define Power "^"
 #define Modulo "%"
 
 //Unary Operation:
@@ -34,7 +36,8 @@ struct Postfix_to_Infix{
         if (C == Add      ||
             C == Subtract ||
             C == Multiply ||
-            C == Divide   /*||
+            C == Divide   ||
+            C == Power  /*||
             C == Modulo*/) // Consider Type Double cannot perform Modulo operation:
         {
             return 1;
@@ -55,6 +58,9 @@ struct Postfix_to_Infix{
         }
         else if (operation == Divide){
             return operand1 / operand2;
+        }
+        else if (operation == Power){
+            return std::pow(operand1, operand2);
         }
         /*else if (operation == Modulo){
             return operand1 % operand2;

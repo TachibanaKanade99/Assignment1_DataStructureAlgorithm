@@ -17,7 +17,7 @@ struct Infix_to_Postfix{
     ~Infix_to_Postfix(){}
 
     bool isOperator(std::string c){
-        if (c == "+" || c == "-" || c == "*" || c == "/"){
+        if (c == "+" || c == "-" || c == "*" || c == "/" || c == "^"){
             return 1;
         }
         else{
@@ -31,6 +31,9 @@ struct Infix_to_Postfix{
         }
         else if (c == "*" || c == "/"){
             return 2;
+        }
+        else if (c == "^"){
+            return 3;
         }
     }
 
@@ -58,6 +61,8 @@ struct Infix_to_Postfix{
                     if (stack.Bot() == "(" || stack.Bot() == "[" || stack.Bot() == "{") {
                         break;
                     }
+
+                    //Check unary operation:
                     if (ptr->data == "-" && (isOperator(ptr->pPrev->data) || ptr->pPrev->data == "-")) {
                         std::string temp = ptr->data;
                         if (ptr != NULL) {

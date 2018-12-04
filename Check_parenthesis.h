@@ -119,11 +119,11 @@ struct Check{
 		}
 	}
 
-	//Read each token to list: // If isBalanced == 1 call ReadToken:
+	//Read each token to list:
     bool ReadToken(std::string data){
 		data = RemoveSpace(data);
 
-        if (isBalanced(data)) {
+        if (isBalanced(data)) { // If isBalanced == 1 call ReadToken:
 			for (int i = 0; i < data.length(); i++) {
 				std::string t;
 				if (IsNumberDigit(data.substr(i, 1))) {

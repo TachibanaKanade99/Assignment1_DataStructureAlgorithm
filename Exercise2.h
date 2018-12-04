@@ -15,14 +15,14 @@ template <typename T>
 struct Exercise2{
     Operand_List<T> operand_list;
 
-    T GetVal(std::string str){
+    /*T GetVal(std::string str){
         Postfix_to_Infix<T> postfix_to_infix(str);
         T result = postfix_to_infix.EvaluatePostfix();
 
         //Add new operand to operand_list:
         operand_list.addLast(new Operand<T>(postfix_to_infix.infix_to_postfix.Postfix_list.getpHead()->data, result));
         return result;
-    }
+    }*/
 
     //Check is operand:
     bool isOperand(char c){
@@ -43,6 +43,7 @@ struct Exercise2{
         }
     }
 
+    //Look for operand and replace it by value:
     T SwapVal(std::string str){
         Postfix_to_Infix<T> postfix_to_infix(str);
         Node<std::string>* ptr = postfix_to_infix.infix_to_postfix.Postfix_list.getpHead();
