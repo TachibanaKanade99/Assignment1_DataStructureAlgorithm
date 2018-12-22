@@ -25,19 +25,19 @@ struct Check{
 		//std::cout << "\nDestructor calls here " << std::endl;
 	}
 
-	std::string RemoveSpace(std::string data){
-		std::stringstream ss;
-		std::string temp;
+    std::string RemoveSpace(std::string data){
+        std::stringstream ss;
+        std::string temp;
 
-		ss << data;
-		data = "";
+        ss << data;
+        data = "";
 
-		while (!ss.eof()){
-			ss >> temp;
-			data = data + temp;
-		}
-		return data;
-	}
+        while (!ss.eof()){
+            ss >> temp;
+            data = data + temp;
+        }
+        return data;
+    }
 
 	bool isPair(char open, char close){
 	    if (open == left_parentheses && close == right_parentheses){
@@ -154,7 +154,7 @@ struct Check{
 			}
 		}
 		else{
-			std::cout << "Error" << std::endl;
+			std::cout << "Error Operation" << std::endl;
 			return 0;
 		}
     }

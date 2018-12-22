@@ -25,7 +25,7 @@ template <typename T>
 struct Postfix_to_Infix{
     //Read data from here:
     std::string data;
-    Infix_to_Postfix infix_to_postfix;
+    Infix_to_Postfix<T> infix_to_postfix;
     Postfix_to_Infix(std::string data){
         this->data = data;
         infix_to_postfix.EvaluateInfix(this->data);
@@ -75,6 +75,11 @@ struct Postfix_to_Infix{
 
         Stack<T> stack;
         Node<std::string>* ptr = infix_to_postfix.Postfix_list.getpHead();
+
+        if (ptr == NULL){
+            std::cout << "\nError Operation" << std::endl;
+            return - 1;
+        }
 
         while (ptr != NULL){
             if (ptr->data == ""){

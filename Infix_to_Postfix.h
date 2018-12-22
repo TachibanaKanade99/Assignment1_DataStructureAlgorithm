@@ -6,10 +6,11 @@
 #define CHECK_PARENTHESES_INFIX_TO_POSTFIX_H
 
 #include <iostream>
-#include "Check_parenthesis.h"
 #include <string>
+#include <sstream>
+#include "Check_parenthesis.h"
 
-
+template <typename T>
 struct Infix_to_Postfix{
     Check check;
     List<std::string> Postfix_list;
@@ -35,6 +36,7 @@ struct Infix_to_Postfix{
         else if (c == "^"){
             return 3;
         }
+        return 4; // if c is number
     }
 
     bool HigherPrecedence(std::string C1, std::string C2){
@@ -44,7 +46,7 @@ struct Infix_to_Postfix{
         if (GetPrecedenceC1 == GetPrecedenceC2){
             return 1;
         }
-        else if (GetPrecedenceC1 > GetPrecedenceC2){
+        if (GetPrecedenceC1 > GetPrecedenceC2){
             return 1;
         }
         return 0;
@@ -57,24 +59,45 @@ struct Infix_to_Postfix{
 
         while (ptr != NULL){
             if (isOperator(ptr->data)) {
-                while (!stack.isEmpty() && HigherPrecedence(stack.Bot(), ptr->data)) {
-                    if (stack.Bot() == "(" || stack.Bot() == "[" || stack.Bot() == "{") {
-                        break;
+                if (stack.isEmpty()){
+                    stack.Push(ptr->data);
+                }
+                else{
+                    if (stack.Bot() == "(" || stack.Bot() == "[" && stack.Bot() == "{"){
+                        stack.Push(ptr->data);
                     }
-
                     //Check unary operation:
-                    if (ptr->data == "-" && (isOperator(ptr->pPrev->data) || ptr->pPrev->data == "-")) {
+                    else if (ptr->data == "-" || ptr->data == "+" && (isOperator(ptr->pPrev->data))) {
                         std::string temp = ptr->data;
-                        if (ptr != NULL) {
+                        while (ptr->pNext != NULL && isOperator(ptr->pNext->data)){
                             ptr = ptr->pNext;
+                            if (ptr->data == "*" || ptr->data == "/"){
+                                std::cout << "Error Operation" << std::endl;
+                                exit(0);
+                            }
+                            else if (temp == "-" && ptr->data == "+"){
+                                temp = "-";
+                            }
+                            else if (temp == "-" && ptr->data == "-"){
+                                temp = "+";
+                            }
+                            else if (temp == "+" && ptr->data == "-"){
+                                temp = "-";
+                            }
+                            else if (temp == "+" && temp == "+"){
+                                temp = "+";
+                            }
                         }
+                        ptr = ptr->pNext;
                         temp += ptr->data;
                         Postfix_list.addLast(temp);
                     }
-                    Postfix_list.addLast(stack.Pop());
-                }
-                if (isOperator(ptr->data)){
-                    stack.Push(ptr->data);
+                    else {
+                        if (HigherPrecedence(stack.Bot(), ptr->data)) {
+                            Postfix_list.addLast(stack.Pop());
+                        }
+                        stack.Push(ptr->data);
+                    }
                 }
             }
 

@@ -13,7 +13,7 @@ template <typename T>
 struct Operand{
     std::string name;
     T val;
-    Operand(std::string name, int val){
+    Operand(std::string name, T val){
         this->name = name;
         this->val = val;
     }

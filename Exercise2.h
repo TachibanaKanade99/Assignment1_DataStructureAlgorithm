@@ -47,6 +47,10 @@ struct Exercise2{
     T SwapVal(std::string str){
         Postfix_to_Infix<T> postfix_to_infix(str);
         Node<std::string>* ptr = postfix_to_infix.infix_to_postfix.Postfix_list.getpHead();
+        if (ptr == NULL){
+            std::cout << "\nError Operation" << std::endl;
+            exit(0);
+        }
 
         while(ptr != NULL){
             if (CheckOperand(ptr->data) && operand_list.Find_Operand(ptr->data)){
@@ -55,7 +59,6 @@ struct Exercise2{
             ptr = ptr->pNext;
         }
         T result = postfix_to_infix.EvaluatePostfix();
-
         operand_list.addLast(new Operand<T>(postfix_to_infix.infix_to_postfix.Postfix_list.getpHead()->data, result));
         return result;
     }
